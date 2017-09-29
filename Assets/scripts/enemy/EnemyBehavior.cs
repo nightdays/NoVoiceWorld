@@ -13,7 +13,8 @@ public class EnemyBehavior : MoveObject
 
     Vector3 sizeBox;
 
-    void Start(){
+    void Start()
+    {
         sizeBox = GetComponent<BoxCollider2D>().size;
     }
 
@@ -27,23 +28,29 @@ public class EnemyBehavior : MoveObject
 
     void LookAround()
     {
-        // if(count>0){
-        //     count -- ;
-        //     return;
-        // }else{
-        //     count = 100;
+        // Vector3 origin = transform.position;
+        // for (int i = 0; i <= 90; i++)
+        // {
+        //     float r = 5f;
+        //     float fd = i * Mathf.PI / 180;
+        //     float x = r * Mathf.Cos(fd);
+        //     float y = r * Mathf.Sin(fd);
+        //     Vector3 target = new Vector3(origin.x + x, origin.y + y);
+        //     Debug.DrawLine(transform.position, target, Color.red);
         // }
-
-        Vector3 origin = transform.position;
+        float width = sizeBox.x / 2 * transform.localScale.x + 0.5f;
+        Vector3 origin = new Vector3(transform.position.x + width, transform.position.y);
+        float distance = 20f;
         for (int i = 0; i <= 90; i++)
         {
-            float r = 5f;
-            float fd = i * Mathf.PI / 180;
-            float x = r * Mathf.Cos(fd);
-            float y = r * Mathf.Sin(fd);
-            Vector3 target = new Vector3(origin.x + x, origin.y + y);
-            Debug.DrawLine(transform.position, target, Color.red);
+                float fd = i * Mathf.PI / 180;
+                float x = distance * Mathf.Cos(fd);
+                float y = distance * Mathf.Sin(fd);
+                Vector3 target = new Vector3(origin.x + x, origin.y + y);
+                RaycastHit2D hit = Physics2D.Raycast(origin , )
         }
+
+
     }
 
     void SeenLeft()
