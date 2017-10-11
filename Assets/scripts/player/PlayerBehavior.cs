@@ -12,13 +12,16 @@ public class PlayerBehavior : MoveObject
 
     private Animator anim;
 
-    Weapon weapon;
+    private Vector3 sizeBox;
+
+    private bool canMove = true;
 
 
     void Start()
     {
+        sizeBox = GetComponent<BoxCollider2D>().size;
         rigidbody2d = GetComponent<Rigidbody2D>();
-        weapon = GetComponentInChildren<Weapon>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,6 +36,7 @@ public class PlayerBehavior : MoveObject
             Move(0);
         }
 
+
         if (Input.GetKeyDown(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
         {
             Jump(5);
@@ -43,20 +47,22 @@ public class PlayerBehavior : MoveObject
         }
 
 
-        if (Input.GetKey(KeyCode.A))
+        if (!Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.A))
         {
             Move(-1);
         }
 
 
-        if (Input.GetKey(KeyCode.D))
+        if (!Input.GetKeyDown(KeyCode.F) && Input.GetKey(KeyCode.D))
         {
             Move(1);
         }
 
-        if(Input.GetKeyDown(KeyCode.F)){
-            weapon.Fire(this);
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Skill_FireBullet();
         }
+
     }
     void Jump(int high)
     {
@@ -65,12 +71,13 @@ public class PlayerBehavior : MoveObject
 
     void Move(int direction)
     {
+        if (!canMove) {
+            direction = 0;
+        }
+
         rigidbody2d.velocity = new Vector3(moveSpeed * direction, rigidbody2d.velocity.y);
 
-        if (anim != null)
-        {
-            anim.SetTrigger("move");
-        }
+        anim.SetFloat("Move", Mathf.Abs(direction));
 
         if (direction < 0 && faceRight)
         {
@@ -81,7 +88,17 @@ public class PlayerBehavior : MoveObject
         {
             Flip();
         }
+    }
 
+    void StopMove()
+    {
+        canMove = false;
+    }
+
+    void resumeMove()
+    {
+        anim.ResetTrigger("Shoot");
+        canMove = true;
     }
 
     void Flip()
@@ -90,6 +107,29 @@ public class PlayerBehavior : MoveObject
         scale.x *= -1;
         rigidbody2d.transform.localScale = scale;
         faceRight = !faceRight;
+    }
+
+    void Skill_FireBullet()
+    {
+        StopMove();
+        anim.SetTrigger("Shoot");
+    }
+
+    void TestRay()
+    {
+        sizeBox = GetComponent<BoxCollider2D>().size;
+        float width = sizeBox.x / 2 * Mathf.Abs(transform.localScale.x) + 0.1f;
+        Vector3 originPos;
+        if (faceRight)
+        {
+            originPos = new Vector3(transform.position.x + width, transform.position.y);
+            Debug.DrawRay(originPos, Vector3.right, Color.red);
+        }
+        else
+        {
+            originPos = new Vector3(transform.position.x - width, transform.position.y);
+            Debug.DrawRay(originPos, Vector3.left, Color.red);
+        }
     }
 
 

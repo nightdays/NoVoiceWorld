@@ -47,7 +47,7 @@ public class EnemyBehavior : MoveObject
                 float x = distance * Mathf.Cos(fd);
                 float y = distance * Mathf.Sin(fd);
                 Vector3 target = new Vector3(origin.x + x, origin.y + y);
-                RaycastHit2D hit = Physics2D.Raycast(origin , )
+                // RaycastHit2D hit = Physics2D.Raycast(origin , )
         }
 
 
