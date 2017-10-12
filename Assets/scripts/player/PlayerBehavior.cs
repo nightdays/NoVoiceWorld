@@ -5,22 +5,19 @@ using UnityEngine;
 public class PlayerBehavior : MoveObject
 {
 
-
-    private Rigidbody2D rigidbody2d;
-
-    private float moveSpeed = 8f;
-
     private Animator anim;
 
     private Vector3 sizeBox;
 
     private bool canMove = true;
 
+    public GameObject bullet ; 
+
 
     void Start()
     {
+        body = GetComponent<Rigidbody2D>();
         sizeBox = GetComponent<BoxCollider2D>().size;
-        rigidbody2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
@@ -66,16 +63,17 @@ public class PlayerBehavior : MoveObject
     }
     void Jump(int high)
     {
-        rigidbody2d.velocity = new Vector3(rigidbody2d.velocity.x, high * 20f);
+        body.velocity = new Vector3(body.velocity.x, high * 20f);
     }
 
     void Move(int direction)
     {
-        if (!canMove) {
+        if (!canMove)
+        {
             direction = 0;
         }
 
-        rigidbody2d.velocity = new Vector3(moveSpeed * direction, rigidbody2d.velocity.y);
+        body.velocity = new Vector3(moveSpeed * direction, body.velocity.y);
 
         anim.SetFloat("Move", Mathf.Abs(direction));
 
@@ -103,9 +101,9 @@ public class PlayerBehavior : MoveObject
 
     void Flip()
     {
-        Vector3 scale = rigidbody2d.transform.localScale;
+        Vector3 scale = body.transform.localScale;
         scale.x *= -1;
-        rigidbody2d.transform.localScale = scale;
+        body.transform.localScale = scale;
         faceRight = !faceRight;
     }
 
@@ -113,6 +111,21 @@ public class PlayerBehavior : MoveObject
     {
         StopMove();
         anim.SetTrigger("Shoot");
+        float width = ( sizeBox.x / 2 + 1f) * Mathf.Abs(transform.localScale.x);
+        Vector3 originPos;
+        if (faceRight)
+        {
+            originPos = new Vector3(transform.position.x + width, transform.position.y);
+            // Debug.DrawRay(originPos, Vector3.right, Color.red);
+        }
+        else
+        {
+            originPos = new Vector3(transform.position.x - width, transform.position.y);
+            // Debug.DrawRay(originPos, Vector3.left, Color.red);
+        }
+        GameObject bulletInstance = Instantiate(bullet,originPos,new Quaternion());
+        Bullet bul = bulletInstance.GetComponent<Bullet>();
+        bul.faceRight = faceRight;
     }
 
     void TestRay()
