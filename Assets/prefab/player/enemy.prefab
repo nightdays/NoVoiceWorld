@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 61356815928470746}
   - component: {fileID: 114790164526005244}
   - component: {fileID: 95374611669539246}
+  - component: {fileID: 114218418499959930}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -63,7 +64,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61356815928470746
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -106,6 +107,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114218418499959930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986206808640484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d0ee9540ce1ce49822b6a13e60b139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  factions: 
 --- !u!114 &114790164526005244
 MonoBehaviour:
   m_ObjectHideFlags: 1

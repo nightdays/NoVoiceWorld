@@ -52,4 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faceRight: 1
-  bulletBoom: {fileID: 1381016671256464, guid: b3bf283e2a9539a4284f6e9ef52e02a0, type: 2}
+  bulletBoom: {fileID: 1505106536544614, guid: b3bf283e2a9539a4284f6e9ef52e02a0, type: 2}

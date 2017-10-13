@@ -31,7 +31,8 @@ public class EnemyBehavior : MoveObject
     void Update()
     {
         LookAround();
-        if(!findTarget) {
+        if (!findTarget)
+        {
             Idle();
         }
     }
@@ -63,7 +64,7 @@ public class EnemyBehavior : MoveObject
         // {
         //     direction = 0;
         // }
-        body.velocity = new Vector3(0 * direction, body.velocity.y);
+        body.velocity = new Vector3(moveSpeed * direction, body.velocity.y);
 
         anim.SetFloat("Move", Mathf.Abs(direction));
 
@@ -88,58 +89,42 @@ public class EnemyBehavior : MoveObject
 
     void LookAround()
     {
-        float width = sizeBox.x / 2 * transform.localScale.x + 0.5f;
+        float width = sizeBox.x / 2 * Mathf.Abs(transform.localScale.x) + 0.5f;
         int dir = 1;
-        if(!faceRight){
+        if (!faceRight)
+        {
             dir = -1;
-            print(dir);
         }
         Vector3 origin = new Vector3(transform.position.x + dir * width, transform.position.y);
         float distance = 20f;
+        bool findTarget = false;
         for (int i = 0; i <= 90; i++)
         {
             float fd = i * Mathf.PI / 180;
             float x = distance * Mathf.Cos(fd) * dir;
             float y = distance * Mathf.Sin(fd);
             Vector3 target = new Vector3(origin.x + x, origin.y + y);
-            RaycastHit2D hit = Physics2D.Raycast(origin , target, 10000f);
-            Debug.DrawLine(origin, target , Color.red);
-            if(hit){
-            }
-            if(hit && hit.collider.name.IndexOf("player")>-1){
+            RaycastHit2D hit = Physics2D.Raycast(origin, target, 10000f);
+            // Debug.DrawLine(origin, target , Color.red);
+            if (hit && hit.collider.name.IndexOf("player") > -1)
+            {
                 findTarget = true;
                 targetPosition = hit.collider.transform.position;
                 break;
             }
         }
 
-        if(findTarget){
-            if( (targetPosition.x - transform.position.x ) > 0 ) {
-                Move(1);
-            }else {
-                Move(-1);
-            }
-        }
-
-
-    }
-
-    void SeenLeft()
-    {
-        float width = sizeBox.x / 2 * transform.localScale.x + 0.5f;
-        RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x - width, transform.position.y), Vector2.left, 10000f);
-        if (hit.collider != null)
+        if (findTarget)
         {
-            if (hit.collider.gameObject.name.Equals("robot"))
+            if ((targetPosition.x - transform.position.x) > 0)
             {
-                // memoryPlayerPosition.x = hit.collider.GetComponent<body>().transform.position.x;
-                // memoryPlayerPosition.y = transform.position.y;
-                // memoryCount = memoryCountConst;
+                Move(1);
             }
             else
             {
-                // memoryPlayerPosition = null;
+                Move(-1);
             }
+            idleCount = 100;
         }
     }
 }
