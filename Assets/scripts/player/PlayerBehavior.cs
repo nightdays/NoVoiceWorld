@@ -122,7 +122,7 @@ public class PlayerBehavior : MoveObject
         if (faceRight)
         {
             originPos = new Vector3(transform.position.x + width, transform.position.y);
-            // Debug.DrawRay(originPos, Vector3.right, Color.red);
+            Debug.DrawRay(originPos, Vector3.right, Color.red);
         }
         else
         {

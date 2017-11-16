@@ -8,7 +8,8 @@ public abstract class Bullet : EveryObject{
 
     public bool faceRight = true;
 
-    void Update(){
+    protected void  Update(){
+        
         if(deadCount>0){
             deadCount --;
         }else{
