@@ -75,7 +75,9 @@ public class PlayerBehavior : MoveObject
 
         body.velocity = new Vector3(moveSpeed * direction, body.velocity.y);
 
-        anim.SetFloat("Move", Mathf.Abs(direction));
+        if(anim!=null){
+            anim.SetFloat("Move", Mathf.Abs(direction));
+        }
 
         if (direction < 0 && faceRight)
         {
@@ -95,7 +97,9 @@ public class PlayerBehavior : MoveObject
 
     void resumeMove()
     {
-        anim.ResetTrigger("Shoot");
+        if(anim!=null){
+            anim.ResetTrigger("Shoot");
+        }
         canMove = true;
     }
 
@@ -110,7 +114,9 @@ public class PlayerBehavior : MoveObject
     void Skill_FireBullet()
     {
         StopMove();
-        anim.SetTrigger("Shoot");
+        if(anim!=null){
+            anim.SetTrigger("Shoot");
+        }
         float width = ( sizeBox.x / 2 + 1f) * Mathf.Abs(transform.localScale.x);
         Vector3 originPos;
         if (faceRight)
@@ -126,6 +132,9 @@ public class PlayerBehavior : MoveObject
         GameObject bulletInstance = Instantiate(bullet,originPos,new Quaternion());
         Bullet bul = bulletInstance.GetComponent<Bullet>();
         bul.faceRight = faceRight;
+        if(anim==null){
+            this.canMove = true;
+        }
     }
 
     void TestRay()

@@ -17,7 +17,9 @@ public class EnemyBehavior : MoveObject
 
     private Vector3 sizeBox;
 
-    private int idleCount = 100;
+    private const int IDLECOUNT = 10;
+
+    private int idleCount = IDLECOUNT;
 
     private Animator anim;
 
@@ -53,7 +55,7 @@ public class EnemyBehavior : MoveObject
         }
         else
         {
-            idleCount = 100;
+            idleCount = IDLECOUNT;
             Flip();
         }
     }
@@ -66,7 +68,9 @@ public class EnemyBehavior : MoveObject
         // }
         body.velocity = new Vector3(moveSpeed * direction, body.velocity.y);
 
-        anim.SetFloat("Move", Mathf.Abs(direction));
+        if(anim!=null){
+            anim.SetFloat("Move", Mathf.Abs(direction));
+        }
 
         if (direction < 0 && faceRight)
         {
@@ -106,7 +110,7 @@ public class EnemyBehavior : MoveObject
             Vector3 target = new Vector3(origin.x + x, origin.y + y);
             RaycastHit2D hit = Physics2D.Raycast(origin, target, 10000f);
             // Debug.DrawLine(origin, target , Color.red);
-            if (hit && hit.collider.name.IndexOf("player") > -1)
+            if (hit.collider!=null && hit.collider.tag.IndexOf("player") > -1)
             {
                 findTarget = true;
                 targetPosition = hit.collider.transform.position;
@@ -124,7 +128,7 @@ public class EnemyBehavior : MoveObject
             {
                 Move(-1);
             }
-            idleCount = 100;
+            idleCount = IDLECOUNT;
         }
     }
 }
