@@ -11,7 +11,7 @@ public class Controller : MonoBehaviour {
 	protected Animator anim;
 
 	//跳跃高度
-	private float jumpHeight = 23f;
+	private float jumpHeight = 10f;
 
 	//是否在地板上
 	private bool isGround = true;
