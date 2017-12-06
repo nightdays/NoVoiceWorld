@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	public float speed = 2f;
+	protected float speed = 2f;
 
     public int direction = 1;
 
     protected Rigidbody2D body;
 
+	public virtual void Init(){
+	}
+
 	void Awake () {
+		Init();
 		body = GetComponent<Rigidbody2D>();
 	}
 	

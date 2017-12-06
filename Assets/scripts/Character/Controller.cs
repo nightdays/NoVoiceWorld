@@ -12,6 +12,8 @@ public class Controller : MonoBehaviour {
 
     protected int direction = 1;
 
+    public bool lockMove = false;
+
     void Awake () {
         body = GetComponent<Rigidbody2D>();
     }
@@ -42,7 +44,10 @@ public class Controller : MonoBehaviour {
         }
     }
 
-    void Move(int i)  {
+    public void Move(int i)  {
+        if(lockMove) {
+            return;
+        };
         body.velocity = new Vector3(i*speed * Time.deltaTime, body.velocity.y);
     }
 
@@ -52,6 +57,9 @@ public class Controller : MonoBehaviour {
     }
 
     void Jump(){
+        if(lockMove) {
+            return;
+        };
         body.velocity = new Vector3( body.velocity.x, jumpHeight); 
     }
 }

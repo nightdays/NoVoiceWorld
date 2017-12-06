@@ -19,7 +19,9 @@ public class ControllerBattle : Controller {
 		}
 
 		if(Input.GetKeyDown(KeyCode.C)){
-			body.velocity = new Vector3(5f * direction, body.velocity.y);
+			this.lockMove = true;
+			this.GetComponentInChildren<Animator>().SetTrigger("rush");
+			body.velocity = new Vector3(10f * direction, body.velocity.y);
 		}
 	}
 }

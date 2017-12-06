@@ -9,35 +9,70 @@ public class DamageSystem : MonoBehaviour
 
     public DamageType type = DamageType.Player;
 
-    public void  Hurt() {
+    public void Hurt()
+    {
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        switch(type){
-            case DamageType.Player : 
-                if("Player".ToUpper().Equals(col.tag.ToUpper())){
-                    col.GetComponent<Player>().Hurt(dmg);
-                }
-            break;
-            case DamageType.Enemy : 
-                if("Enemy".ToUpper().Equals(col.tag.ToUpper())){
-                    col.GetComponent<Enemy>().Hurt(dmg);
-                }
-            break;
-            case DamageType.All : 
-                if("Player".ToUpper().Equals(col.tag.ToUpper())){
-                    col.GetComponent<Player>().Hurt(dmg);
-                }
-                if("Enemy".ToUpper().Equals(col.tag.ToUpper())){
-                    col.GetComponent<Enemy>().Hurt(dmg);
-                }
-            break;
+        switch (type)
+        {
+            case DamageType.Player:
+                DamagePlayer(col);
+                break;
+            case DamageType.Enemy:
+                DamageEnemy(col);
+                break;
+            case DamageType.All:
+                DamageAll(col);
+                break;
+            default: Destroy(gameObject); break;
         }
-        DestroyObject(this);
     }
 
-    public enum DamageType {
-        Player,Enemy,All
+    void DamagePlayer(Collider2D col)
+    {
+        if ("Player".ToUpper().Equals(col.tag.ToUpper()))
+        {
+            Destroy(gameObject);
+            col.GetComponent<Player>().Hurt(dmg);
+        }
+        if ("wall".ToUpper().Equals(col.tag.ToUpper()))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void DamageEnemy(Collider2D col)
+    {
+        if ("Enemy".ToUpper().Equals(col.tag.ToUpper()))
+        {
+            Destroy(gameObject);
+            col.GetComponent<Enemy>().Hurt(dmg);
+        }
+        if ("wall".ToUpper().Equals(col.tag.ToUpper()))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void DamageAll(Collider2D col)
+    {
+        if ("Player".ToUpper().Equals(col.tag.ToUpper()))
+        {
+            Destroy(gameObject);
+            col.GetComponent<Player>().Hurt(dmg);
+        }
+        if ("Enemy".ToUpper().Equals(col.tag.ToUpper()))
+        {
+            Destroy(gameObject);
+            col.GetComponent<Enemy>().Hurt(dmg);
+        }
+    }
+
+
+    public enum DamageType
+    {
+        Player, Enemy, All
     }
 }
