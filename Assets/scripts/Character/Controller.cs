@@ -15,6 +15,7 @@ public class Controller : MonoBehaviour {
     public bool lockMove = false;
 
     void Awake () {
+        Physics2D.IgnoreLayerCollision(8,9 , true);
         body = GetComponent<Rigidbody2D>();
     }
 	
